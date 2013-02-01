@@ -66,6 +66,9 @@ public:
     void setFloat(const char *key, float value);
     const char *get(const char *key) const;
     int getInt(const char *key) const;
+#ifdef SAMSUNG_CAMERA_HARDWARE
+    int getInt64(const char *key) const;
+#endif
     float getFloat(const char *key) const;
 
     void remove(const char *key);
@@ -179,6 +182,21 @@ public:
     static const char KEY_SUPPORTED_PREVIEW_FRAME_RATE_MODES[];
     static const char KEY_PREVIEW_FRAME_RATE_AUTO_MODE[];
     static const char KEY_PREVIEW_FRAME_RATE_FIXED_MODE[];
+    static const char KEY_CAPTURE_MODE[];
+    static const char KEY_SUPPORTED_CAPTURE_MODES[];
+    static const char KEY_PICTURE_COUNT[];
+    static const char KEY_MAX_BURST_PICTURE_COUNT[];
+    static const char KEY_SUPPORTED_CONTINUOUS_AF[];
+    static const char CAPTURE_MODE_NORMAL[];
+    static const char CAPTURE_MODE_BURST[];
+    static const char CAPTURE_MODE_CONTI_BURST[];
+    static const char CAPTURE_MODE_HDR[];
+    static const char CAPTURE_MODE_HJR[];
+    static const char CAPTURE_MODE_PANORAMA[];
+    static const char KEY_TAKING_PICTURE_ZOOM[];
+    static const char KEY_PANORAMA_MODE[];
+    static const char PANORAMA_MODE_NOT_INPROGRESS[];
+    static const char PANORAMA_MODE_INPROGRESS[];
 #endif
     // The dimensions for captured pictures in pixels (width x height).
     // Example value: "1024x768". Read/write.
@@ -568,6 +586,7 @@ public:
     // Example value: "true" or "false". Read only.
     static const char KEY_VIDEO_SNAPSHOT_SUPPORTED[];
     static const char KEY_FULL_VIDEO_SNAP_SUPPORTED[];
+    static const char KEY_POWER_MODE_SUPPORTED[];
 
 #ifdef QCOM_HARDWARE
     static const char KEY_ISO_MODE[];
@@ -603,6 +622,8 @@ public:
     static const char KEY_MEMORY_COLOR_ENHANCEMENT[];
     static const char KEY_SUPPORTED_MEM_COLOR_ENHANCE_MODES[];
 
+    static const char KEY_POWER_MODE[];
+
     static const char KEY_ZSL[];
     static const char KEY_SUPPORTED_ZSL_MODES[];
 
@@ -628,6 +649,7 @@ public:
     static const char KEY_METERING[];
     static const char KEY_WDR[];
     static const char KEY_WEATHER[];
+    static const char KEY_CITYID[];
 #endif
     static const char KEY_AE_BRACKET_HDR[];
 
@@ -818,6 +840,16 @@ public:
     static const char FOCUS_MODE_CONTINUOUS_PICTURE[];
 
 #ifdef QCOM_HARDWARE
+    static const char FOCUS_MODE_CONTINUOUS_CAMERA[];
+
+    // Values for Continuous AF
+    static const char CAF_OFF[] ;
+    static const char CAF_ON[] ;
+    // Proprietaries from CodeAurora use these...
+    static const char CONTINUOUS_AF_OFF[] ;
+    static const char CONTINUOUS_AF_ON[] ;
+    static const char KEY_CONTINUOUS_AF[] ;
+
     // Normal focus mode. Applications should call
     // CameraHardwareInterface.autoFocus to start the focus in this mode.
     static const char FOCUS_MODE_NORMAL[];
@@ -828,6 +860,8 @@ public:
     static const char ISO_400[];
     static const char ISO_800[];
     static const char ISO_1600[];
+    static const char ISO_3200[];
+    static const char ISO_6400[];
     // Values for Lens Shading
     static const char LENSSHADE_ENABLE[] ;
     static const char LENSSHADE_DISABLE[] ;
@@ -839,10 +873,19 @@ public:
 
     static const char KEY_SHARPNESS[];
     static const char KEY_MAX_SHARPNESS[];
+#ifdef QCOM_HARDWARE
+    static const char KEY_MIN_SHARPNESS[];
+#endif
     static const char KEY_CONTRAST[];
     static const char KEY_MAX_CONTRAST[];
+#ifdef QCOM_HARDWARE
+    static const char KEY_MIN_CONTRAST[];
+#endif
     static const char KEY_SATURATION[];
     static const char KEY_MAX_SATURATION[];
+#ifdef QCOM_HARDWARE
+    static const char KEY_MIN_SATURATION[];
+#endif
 
     static const char KEY_HISTOGRAM[] ;
     static const char KEY_SUPPORTED_HISTOGRAM_MODES[] ;
@@ -881,6 +924,10 @@ public:
     static const char AE_BRACKET_HDR[];
     static const char AE_BRACKET[];
 
+    //POWER MODE
+    static const char LOW_POWER[];
+    static const char NORMAL_POWER[];
+
     // Values for HFR settings.
     static const char VIDEO_HFR_OFF[];
     static const char VIDEO_HFR_2X[];
@@ -909,6 +956,7 @@ public:
     int getOrientation() const;
     void setOrientation(int orientation);
     void setPreviewFpsRange(int minFPS,int maxFPS);
+    void setPostviewSize(int x,int y);
     void getSupportedHfrSizes(Vector<Size> &sizes) const;
 #endif
 
